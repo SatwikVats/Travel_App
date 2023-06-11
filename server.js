@@ -4,11 +4,14 @@ const app = express();
 const PORT = 3500;
 
 const hotelRouter = require('./routes/hotel.router');
+const categoryRouter = require('./routes/category.router');
+
 const connectDB = require('./config/dbconfig');
 app.use(express.json());    //Middleware
 connectDB();
 
 const hotelDataAddedToDB = require('./routes/dataimport.router');
+const categoryDataAddedToDB = require('./routes/categoryimport.route');
 
 app.get("/", (req, res) =>{
     res.send("Hello");
@@ -16,7 +19,9 @@ app.get("/", (req, res) =>{
 })
 
 app.use("/api/hotelData", hotelDataAddedToDB);
+app.use("/api/categoryData", categoryDataAddedToDB);
 app.use("/api/hotels", hotelRouter);
+app.use("/api/category", categoryRouter);
 
 mongoose.connection.once("open", () => {
     console.log("Connected to the DB");
