@@ -1,7 +1,7 @@
 const CryptoJS = require('crypto-js');
 const User = require('../model/user.model');
 
-const signupHandler = (async (req, res)=>{
+const signupHandler = async (req, res)=>{
     try{
         const userObject = {
             username: req.body.username,
@@ -16,6 +16,6 @@ const signupHandler = (async (req, res)=>{
     catch(err){
         res.status(500).json({message: "Error creating the new user."});
     }
-})
+}
 
 module.exports = signupHandler;

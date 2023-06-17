@@ -1,43 +1,25 @@
 const express = require('express');
-const Wishlist = require('../model/wishlist.model');
+const router = express.Router();
+//const Wishlist = require('../model/wishlist.model');
 
 const verifyUser = require('../middleware/verifyuser');
-const router = express.Router();
+const createWishlistHandler = require('../controllers/createWishlistController');
+const deleteWishlistHandler = require('../controllers/deleteWishlistController');
+const getWishlistHandler = require('../controllers/getWishlistController');
+//const wishlistController = require('../controllers/wishlistController');
+
+//const { createWishlistHandler, deleteWishlistHandler, getWishlistHandler } = require('../controllers/wishlistController');
+//import { createWishlistHandler } from '../controllers/wishlistController';
+//import { deleteWishlistHandler } from '../controllers/wishlistController';
+//import { getWishlistHandler } from '../controllers/wishlistController';
 
 
-router.route("/").post(verifyUser, async (req, res) =>{
-    try{
-        const newWishList = new Wishlist(req.body);
-        const savedWishList = await newWishList.save();
-        res.status(201).json(savedWishList);
-    }
-    catch(err){
-        res.status(500).json({message:"Failed to create wishlist."});
-    }
-});
+
+router.route("/").post(verifyUser, createWishlistHandler);
 
 //During delete requests, we have to pass the parameter in the API as well.
-router.route("/:id").delete(verifyUser, async (req, res) => {
-    try{
-        await Wishlist.findByIdAndDelete(req.params.id);
-        res.json({message: "Hotel deleted from wishlist."});
-    }
-    catch(err){
-        res.status(500).json({message: "Could not delete hotel from wishlist."});
-    }
-})
+router.route("/:id").delete(verifyUser, deleteWishlistHandler);
 
-router.route("/").get(verifyUser, async(req, res)=> {
-    try{
-        const wishlist = await Wishlist.find({});
-        wishlist? res.json(wishlist) : res.json({message: "No items found in the wishlist"});
-
-    }
-    catch(err){
-        console.log(err);
-        res.status(500).json(err);
-
-    }
-})
+router.route("/").get(verifyUser, getWishlistHandler);
 
 module.exports = router;
