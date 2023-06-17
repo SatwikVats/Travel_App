@@ -7,6 +7,7 @@ const hotelRouter = require('./routes/hotel.router');
 const categoryRouter = require('./routes/category.router');
 const singleHotelRouter = require('./routes/singlehotel.router');
 const authRouter = require('./routes/auth.router');
+const wishListRouter = require('./routes/wishlist.router');
 
 const connectDB = require('./config/dbconfig');
 app.use(express.json());    //Middleware
@@ -26,6 +27,7 @@ app.use("/api/hotels", hotelRouter);
 app.use("/api/category", categoryRouter);
 app.use("/api/hotels", singleHotelRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/wishList", wishListRouter);
 
 mongoose.connection.once("open", () => {
     console.log("Connected to the DB");

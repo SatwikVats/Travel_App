@@ -1,4 +1,41 @@
 const express = require('express');
+const Wishlist = require('../model/wishlist.model');
 const router = express.Router();
 
-const Wishlist= require('../model/wishlist.model');
+
+router.route("/").post( async (req, res) =>{
+    try{
+        const newWishList = new Wishlist(req.body);
+        const savedWishList = await newWishList.save();
+        res.status(201).json(savedWishList);
+    }
+    catch(err){
+        res.status(500).json({message:"Failed to create wishlist."});
+    }
+});
+
+//During delete requests, we have to pass the parameter in the API as well.
+router.route("/:id").delete(async (req, res) => {
+    try{
+        await Wishlist.findByIdAndDelete(req.params.id);
+        res.json({message: "Hotel deleted from wishlist."});
+    }
+    catch(err){
+        res.status(500).json({message: "Could not delete hotel from wishlist."});
+    }
+})
+
+router.route("/").get(async(req, res)=> {
+    try{
+        const wishlist = await Wishlist.find({});
+        wishlist? res.json(wishlist) : res.json({message: "No items found in the wishlist"});
+
+    }
+    catch(err){
+        console.log(err);
+        res.status(500).json(err);
+
+    }
+})
+
+module.exports = router;
