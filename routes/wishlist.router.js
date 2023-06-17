@@ -1,9 +1,11 @@
 const express = require('express');
 const Wishlist = require('../model/wishlist.model');
+
+const verifyUser = require('../middleware/verifyuser');
 const router = express.Router();
 
 
-router.route("/").post( async (req, res) =>{
+router.route("/").post(verifyUser, async (req, res) =>{
     try{
         const newWishList = new Wishlist(req.body);
         const savedWishList = await newWishList.save();
