@@ -17,7 +17,7 @@ router.route("/").post(verifyUser, async (req, res) =>{
 });
 
 //During delete requests, we have to pass the parameter in the API as well.
-router.route("/:id").delete(async (req, res) => {
+router.route("/:id").delete(verifyUser, async (req, res) => {
     try{
         await Wishlist.findByIdAndDelete(req.params.id);
         res.json({message: "Hotel deleted from wishlist."});
@@ -27,7 +27,7 @@ router.route("/:id").delete(async (req, res) => {
     }
 })
 
-router.route("/").get(async(req, res)=> {
+router.route("/").get(verifyUser, async(req, res)=> {
     try{
         const wishlist = await Wishlist.find({});
         wishlist? res.json(wishlist) : res.json({message: "No items found in the wishlist"});
