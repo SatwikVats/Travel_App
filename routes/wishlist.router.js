@@ -6,14 +6,7 @@ const verifyUser = require('../middleware/verifyuser');
 const createWishlistHandler = require('../controllers/createWishlistController');
 const deleteWishlistHandler = require('../controllers/deleteWishlistController');
 const getWishlistHandler = require('../controllers/getWishlistController');
-//const wishlistController = require('../controllers/wishlistController');
-
 //const { createWishlistHandler, deleteWishlistHandler, getWishlistHandler } = require('../controllers/wishlistController');
-//import { createWishlistHandler } from '../controllers/wishlistController';
-//import { deleteWishlistHandler } from '../controllers/wishlistController';
-//import { getWishlistHandler } from '../controllers/wishlistController';
-
-
 
 router.route("/").post(verifyUser, createWishlistHandler);
 
