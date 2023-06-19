@@ -12,7 +12,7 @@ const wishListRouter = require('./routes/wishlist.router');
 
 const connectDB = require('./config/dbconfig');
 app.use(express.json());    //Middleware
-app.use(cors());
+app.use(cors());   //We need to enable cors (Cross Origin Resource Sharing) to make our API accessible to frontend.
 connectDB();
 
 const hotelDataAddedToDB = require('./routes/dataimport.router');
