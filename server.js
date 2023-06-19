@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const app = express();
 const PORT = 3500;
 
@@ -11,6 +12,7 @@ const wishListRouter = require('./routes/wishlist.router');
 
 const connectDB = require('./config/dbconfig');
 app.use(express.json());    //Middleware
+app.use(cors());
 connectDB();
 
 const hotelDataAddedToDB = require('./routes/dataimport.router');
